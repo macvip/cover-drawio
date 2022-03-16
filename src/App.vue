@@ -31,6 +31,7 @@
 <script setup>
 import { ref, provide } from 'vue'
 import CicleMenu from './components/ciclemenu'
+import { copyToClipboard } from './utils/clipboard'
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 
@@ -150,7 +151,10 @@ function savePng() {
 function copyMarkdownLink() {
     let filename = svgWork.value.substring('assets/'.length)
     let mdLink = `![${filename}](${svgWork.value})`
-    navigator.clipboard.writeText(mdLink)
+    if (navigator.clipboard) 
+        navigator.clipboard.writeText(mdLink)
+    else
+        copyToClipboard(mdLink)
 }
 
 function itemClicked(name) {
