@@ -27,7 +27,7 @@ data() {
         maxRadius: PI,
         menu_btn: {
             name: 'menu',
-            icon: 'url(toolbar/menu.png)'
+            icon: 'url(images/toolbar/menu.png)'
         },
         menu_items: [
             {
@@ -85,7 +85,7 @@ data() {
     computed: {
         setURL(){
             return this.menu_items.map((v, i)=>{
-                return {...v, icon: `url(${'toolbar/' + v.icon})`, delay: `${i / this.delayAnimation}s`};
+                return {...v, icon: `url(${'images/toolbar/' + v.icon})`, delay: `${i / this.delayAnimation}s`};
             });
         }
     },

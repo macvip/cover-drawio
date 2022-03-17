@@ -1,5 +1,4 @@
 <template>
-<div id="app">
   <Loading v-model:active="loading" />
   <div id="content" v-if="!loading" >
     <template v-if="svgWork">
@@ -13,19 +12,17 @@
     <template v-else>
     <div class="newdraw">
       <button class="drawBtn" @click="openDrawio">
-          <img style="width: 32px;" src="sketch.png" />
+          <img style="width: 32px;" src="images/sketch.png" />
           <span>  新建绘图 </span>
       </button>
       <p>在 Drawio 挂件中保存绘图后，请点击下方刷新按钮</p>
       <button @click="reloadAll">
-          <img class="btnIcon" src="toolbar/refresh.png" />
+          <img class="btnIcon" src="images/toolbar/refresh.png" />
           <span>刷新</span>
       </button>
     </div>
     </template>
   </div>
- 
-</div>
 </template>
 
 <script setup>
@@ -184,9 +181,15 @@ provide('itemClicked', itemClicked)
 
 
 <style scoped>
-#app {
-  font-size: 16px;
-  color: #454545;
+#content {
+  display: flex;
+  position: absolute;
+  bottom: 1vh;
+  left: 1vw;
+  width: 98vw;
+  height: 98vh;
+  align-items: center;
+  justify-content: center;
 }
 
 #toolmenu {
@@ -212,12 +215,11 @@ button {
 }
 
 .imgFrame {
-  text-align: center;
+  display: flex;
 }
 
 #svgImage {
   max-width: 100%;
-  display: inline-block;
 }
 
 button:hover .btnIcon {
