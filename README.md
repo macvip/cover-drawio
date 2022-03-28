@@ -17,3 +17,4 @@
 - **必须**首先从思源笔记的挂件集市安装 [drawio 挂件](https://github.com/Zuoqiu-Yingyi/widget-drawio)
 - 在使用 drawio 挂件 创建 绘图文件时，建议直接选择 svg 格式
 - 在使用 drawio 挂件 *保存* 绘图文件时，**必须选择 svg 格式**
+- 思源笔记 v1.9.4(含)以下版本，请下载 [历史版本v0.1.5](https://github.com/macvip/cover-drawio/releases/download/v0.1.5/cover-drawio-v0.1.5.zip)
