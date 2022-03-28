@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref, provide } from 'vue'
+import { ref, provide, onBeforeMount } from 'vue'
 import CicleMenu from './components/ciclemenu'
 import { copyToClipboard } from './utils/clipboard'
 import Loading from 'vue-loading-overlay'
@@ -101,18 +101,8 @@ function setAsset(asset) {
 }
 
 function openPreview() {
-    let target = parentDom.parentElement
-    if(target) {
-        let link = document.createElement('img')
-        link.src = document.querySelector('#svgImage').src    
-        target.appendChild(link)
-
-        let clickEvent = document.createEvent('MouseEvents')
-        clickEvent.initEvent('dblclick', true, true)
-        link.dispatchEvent(clickEvent)
-        link.remove()
-    }
-
+    let svgSrc = document.querySelector('#svgImage').src
+    window.parent.document.previewDraw(svgSrc)
 }
 
 function savePng() {
@@ -177,6 +167,53 @@ function itemClicked(name) {
 }
     
 provide('itemClicked', itemClicked)
+
+onBeforeMount(()=>{
+    let root = window.parent.document
+    if (!root.getElementById('protyleViewerScript')) {
+        let vs = root.createElement('script')
+        vs.id = 'protyleViewerScript'
+        vs.async = true
+        vs.src = '/stage/protyle/js/viewerjs/viewer.js?v=1.10.4'
+        root.head.appendChild(vs)
+    }
+    if (!root.getElementById('previewdraw')) {
+        let vv = root.createElement('script')
+        vv.id = 'previewdraw'
+        vv.innerHTML = `
+            function previewDraw(src) {
+                let img = document.createElement("img");
+                img.src = src;
+                const pv = new Viewer(img,{
+                    button: false,
+                    hidden: function() {
+                        pv.destroy()
+                    },
+                    toolbar: {
+                        zoomIn: true,
+                        zoomOut: true,
+                        oneToOne: true,
+                        reset: true,
+                        prev: true,
+                        play: true,
+                        next: true,
+                        rotateLeft: true,
+                        rotateRight: true,
+                        flipHorizontal: true,
+                        flipVertical: true,
+                        close: function() {
+                            pv.destroy()
+                        }
+                    }
+                });
+                pv.show();
+            }
+            document.previewDraw = previewDraw;     
+        `
+        root.head.appendChild(vv)
+    }    
+})
+
 </script>
 
 
